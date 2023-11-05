@@ -11,6 +11,7 @@ public class ActorCreacionDto
     
     public DateTime FechaNacimiento { get; set; }
 
+    [TipoArchivo(grupoTIpoArchivo: GrupoTIpoArchivo.Imagen)]
     [PesoArchivo(pesoMaximoMb: 4)]
     public IFormFile Foto { get; set; }
 }
