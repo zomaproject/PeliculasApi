@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PeliculasApi.Services;
 
 namespace PeliculasApi;
 
@@ -14,8 +15,10 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddAutoMapper(typeof(Startup));
+        services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
+        services.AddHttpContextAccessor();
         services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_configuration["mssqlserver"]));
-        services.AddControllers();
+        services.AddControllers().AddNewtonsoftJson();
         services.AddEndpointsApiExplorer();
         
     }
@@ -29,6 +32,7 @@ public class Startup
 
         app.UseHttpsRedirection();
 
+        app.UseStaticFiles();
         app.UseRouting();
 
         app.UseAuthorization();

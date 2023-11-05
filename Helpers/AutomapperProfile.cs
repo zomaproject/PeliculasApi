@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using PeliculasApi.DTOS;
 using PeliculasApi.Properties.Entities;
 
@@ -10,9 +9,15 @@ namespace PeliculasApi.Helpers
         public AutomapperProfile()
         {
             CreateMap<Genero, GeneroDto>().ReverseMap();
-            CreateMap<Genero, GeneroCreacionDto>().ReverseMap();
+
+            CreateMap<GeneroCreacionDto, GeneroDto>();
+
             CreateMap<Actor, ActorDto>().ReverseMap();
-            CreateMap<ActorCreacionDto, Actor>();
+
+            CreateMap<ActorCreacionDto, Actor>()
+                .ForMember(x => x.Foto, options => options.Ignore());
+
+            CreateMap<ActorPatchDto, Actor>().ReverseMap();
         }
     }
 }

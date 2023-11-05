@@ -3,13 +3,8 @@ using PeliculasApi.Validations;
 
 namespace PeliculasApi.DTOS;
 
-public class ActorCreacionDto
+public class ActorCreacionDto: ActorPatchDto
 {
-    [Required]
-    [StringLength(120)]
-    public string Nombre { get; set; }
-    
-    public DateTime FechaNacimiento { get; set; }
 
     [TipoArchivo(grupoTIpoArchivo: GrupoTIpoArchivo.Imagen)]
     [PesoArchivo(pesoMaximoMb: 4)]
