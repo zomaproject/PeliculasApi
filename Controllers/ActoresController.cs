@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using PeliculasApi.DTOS;
+using PeliculasApi.Helpers;
 using PeliculasApi.Properties.Entities;
 using PeliculasApi.Services;
 
@@ -26,9 +27,12 @@ public class ActoresController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<ActorDto>>> Get()
+    public async Task<ActionResult<List<ActorDto>>> Get([FromQuery] PaginacionDto paginacionDto)
     {
-        var actoresDb = await _context.Actores.ToListAsync();
+        var queryable = _context.Actores.AsQueryable();
+        await HttpContext.InsertarParametrosPaginacion(queryable, paginacionDto.CantidadRegistrosPorPagina);
+
+        var actoresDb = await queryable.Paginar(paginacionDto).ToListAsync();
         return _mapper.Map<List<ActorDto>>(actoresDb);
     }
 
@@ -105,20 +109,18 @@ public class ActoresController : ControllerBase
         var entidadDb = await _context.Actores.FirstOrDefaultAsync(actorDb => actorDb.Id == id);
 
         if (entidadDb is null) return NotFound();
-        
+
         var entidadDto = _mapper.Map<ActorPatchDto>(entidadDb);
 
         patchDocument.ApplyTo(entidadDto, ModelState);
 
         var esValido = TryValidateModel(entidadDto);
-        if(!esValido) return BadRequest(ModelState);
-        
+        if (!esValido) return BadRequest(ModelState);
+
         _mapper.Map(entidadDto, entidadDb);
 
         await _context.SaveChangesAsync();
 
         return NoContent();
-
-
     }
 }
