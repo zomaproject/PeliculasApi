@@ -10,4 +10,9 @@ public class Actor
 
     public DateTime FechaNacimiento { get; set; }
     public string Foto { get; set; }
+    
+    
+    // Propiedades de navegación
+    public List<PeliculaActor> PeliculasActores { get; set; }
+    //
 }

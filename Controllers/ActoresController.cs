@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.EntityFrameworkCore;
 using PeliculasApi.DTOS;
 using PeliculasApi.Helpers;
@@ -108,7 +107,6 @@ public class ActoresController : ControllerBase
 
         var entidadDb = await _context.Actores.FirstOrDefaultAsync(actorDb => actorDb.Id == id);
 
-        if (entidadDb is null) return NotFound();
 
         var entidadDto = _mapper.Map<ActorPatchDto>(entidadDb);
 
