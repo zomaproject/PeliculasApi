@@ -18,11 +18,14 @@ public class ApplicationDbContext : DbContext
     {
         modelBuilder.Entity<PeliculaActor>().HasKey(x => new { x.ActorId, x.PeliculaId });
         modelBuilder.Entity<PeliculaGenero>().HasKey(x => new { x.GeneroId, x.PeliculaId });
-
         base.OnModelCreating(modelBuilder);
     }
 
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
     }
+    
+    
+    
+    
 }

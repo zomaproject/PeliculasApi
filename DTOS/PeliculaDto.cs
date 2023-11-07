@@ -3,8 +3,8 @@ namespace PeliculasApi.DTOS;
 
 public class PeliculaDto
 {
-    
-    
+
+    public int Id { get; set; } 
     public string Titulo { get; set; }
     
     public bool EnCines     { get; set; }

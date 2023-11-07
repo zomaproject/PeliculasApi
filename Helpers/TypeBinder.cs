@@ -17,10 +17,8 @@ public class TypeBinder<T>: IModelBinder
 
         try
         {
-            // esto no funciona
             var deserializedValue = JsonConvert.DeserializeObject<T>(valueProviderResult.FirstValue!);
             bindingContext.Result = ModelBindingResult.Success(deserializedValue);
-            // esto si
             
             
             
